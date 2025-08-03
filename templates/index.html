@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FastAPI + JS Demo</title>
+    <style>
+        body {
+            background-color: #ffe6f0; /* Light pink */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        h1 {
+            color: hwb(340 4% 6%);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: hsl(191, 100%, 86%);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff99aa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello from FastAPI + HTML + JavaScript!</h1>
+    <button onclick="greet()">Click me</button>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
