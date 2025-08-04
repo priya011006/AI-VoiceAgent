@@ -1,3 +1,3 @@
 function greet() {
-    alert("Welcome! Your project is working 🎉");
+    alert("Welcome! To my new project. 🎉");
 }
