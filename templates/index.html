@@ -1,11 +1,11 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>FastAPI + JS Demo</title>
     <style>
         body {
-            background-color: #ffe6f0; /* Light pink */
+            background-color: #ffe6f0;
             font-family: Arial, sans-serif;
             text-align: center;
             padding-top: 100px;
@@ -24,6 +24,7 @@
             border-radius: 5px;
             transition: border 0.3s ease;
         }
+
         input[type="text"]:focus {
             outline: none;
             border-color: hwb(340 4% 6%);
@@ -40,15 +41,10 @@
             position: relative;
             overflow: hidden;
         }
+
         button:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        button:active {
-            transform: translateY(0);
-        }
-
-        button:hover {
             background-color: #ff99aa;
         }
 
@@ -56,7 +52,7 @@
             margin-top: 20px;
             width: 100%;
         }
-        
+
         .loading {
             display: inline-block;
             width: 20px;
@@ -66,62 +62,33 @@
             border-top-color: #ff99aa;
             animation: spin 1s ease-in-out infinite;
         }
-        
+
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        .section {
+            margin-top: 60px;
         }
     </style>
 </head>
 <body>
+    <!-- Day 3: TTS Section -->
     <h1>Murf AI Voice Agent</h1>
     <p id="status-text" style="color: #666; min-height: 24px;">Ready to generate audio</p>
     <input type="text" id="text-input" placeholder="Enter text here">
     <button id="submit-button">Generate Audio</button>
     <audio id="audio-player" controls></audio>
 
-    <script>
-        document.getElementById('submit-button').addEventListener('click', async () => {
-            const text = document.getElementById('text-input').value;
-            if (!text.trim()) {
-                alert('Please enter some text');
-                return;
-            }
-            
-            const button = document.getElementById('submit-button');
-            button.disabled = true;
-            button.innerHTML = '<span class="loading"></span> Generating...';
-            const response = await fetch('http://localhost:8000/generate-audio/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ text })
-            });
+    <!-- Day 4: Echo Bot Section -->
+    <div class="section">
+        <h1>Echo Bot</h1>
+        <button id="start-recording">Start Recording</button>
+        <button id="stop-recording" disabled>Stop Recording</button>
+        <audio id="echo-player" controls style="display: none;"></audio>
+    </div>
 
-            if (response.ok) {
-                const data = await response.json();
-                const audioUrl = data.audio_url;
-                document.getElementById('status-text').textContent = "Playing audio...";
-                const audioPlayer = document.getElementById('audio-player');
-                audioPlayer.src = audioUrl;
-                audioPlayer.play().then(() => {
-                    document.getElementById('status-text').textContent = "Success!";
-                    document.getElementById('status-text').style.color = 'green';
-                }).catch(e => {
-                    document.getElementById('status-text').textContent = "Error playing audio";
-                    console.error('Playback error:', e);
-                });
-                button.disabled = false;
-                button.textContent = 'Generate Audio';
-            } else {
-                const error = await response.json();
-                document.getElementById('status-text').textContent = `Error: ${error.detail || response.statusText}`;
-                document.getElementById('status-text').style.color = 'red';
-                console.error('Error generating audio:', response.statusText);
-                button.disabled = false;
-                button.textContent = 'Generate Audio';
-            }
-        });
-    </script>
+    <!-- Load external JS -->
+    <script src="/static/script.js"></script>
 </body>
-</html>  
+</html>
