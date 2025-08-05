@@ -6,6 +6,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from murf import Murf  # ✅ Murf SDK
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+MURF_API_KEY = os.getenv("MURF_API_KEY")
 
 app = FastAPI()
 
@@ -36,13 +42,12 @@ class TTSRequest(BaseModel):
 @app.post("/generate-audio/")
 async def generate_audio(data: TTSRequest):
     try:
-        client = Murf(api_key="ap2_909d4dac-d4aa-477c-a2a5-cb7d02af060d")  # ✅ Your API Key
+        client = Murf(api_key=MURF_API_KEY)  # ✅ Securely using env variable
 
         response = client.text_to_speech.generate(
             text=data.text,
-            voice_id="en-US-natalie",   # ✅ Voice supported
-            style="Promo"               # ✅ Optional style
-            # Removed multi_native_locale because it's not supported for this voice
+            voice_id="en-US-natalie",
+            style="Promo"
         )
 
         return {"audio_url": response.audio_file}
