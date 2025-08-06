@@ -46,4 +46,28 @@ An interactive web app that converts text into lifelike speech using the **Murf 
 Built with **FastAPI** and **Vanilla JS**, this project serves a simple frontend, accepts user input, and returns a playable audio link — perfect for experimenting with voice tech and real-time audio generation.
 
 ---
+# 🎙️ FastAPI Voice Agent - Day 5
+
+This is part of my #30DaysOfAIVoiceAgents challenge.
+
+## ✅ Features
+- Convert text to speech using Murf AI
+- Record voice from the browser
+- Upload audio to backend
+- Play uploaded audio instantly
+- Beautiful frontend (HTML/CSS/JS)
+
+## 📦 Tech Stack
+- FastAPI
+- Murf API (TTS)
+- JavaScript
+- HTML/CSS
+- Web Audio API
+
+## 🚀 How to Run Locally
+
+### 1. Clone this repo
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
 

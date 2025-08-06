@@ -1,84 +1,104 @@
-// TTS Generation
-document.getElementById('submit-button').addEventListener('click', async () => {
-    const text = document.getElementById('text-input').value;
-    const button = document.getElementById('submit-button');
-    const status = document.getElementById('status-text');
+// ========== Text-to-Speech (Generate Audio) ==========
+document.getElementById("submit-button").addEventListener("click", async () => {
+  const textInput = document.getElementById("text-input").value.trim();
+  const audioPlayer = document.getElementById("audio-player");
+  const statusText = document.getElementById("status-text");
 
-    if (!text.trim()) {
-        alert('Please enter some text');
-        return;
-    }
+  if (!textInput) {
+    statusText.textContent = "Please enter some text.";
+    return;
+  }
 
-    button.disabled = true;
-    button.innerHTML = '<span class="loading"></span> Generating...';
-    status.textContent = 'Generating audio...';
+  statusText.textContent = "Generating audio...";
 
-    try {
-        const response = await fetch('http://localhost:8000/generate-audio/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text })
-        });
+  try {
+    const response = await fetch("/generate-audio/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: textInput }),
+    });
 
-        const data = await response.json();
+    if (!response.ok) throw new Error("Failed to generate audio.");
 
-        if (data.audio_url) {
-            const audioPlayer = document.getElementById('audio-player');
-            audioPlayer.src = data.audio_url;
-            audioPlayer.play();
-            status.textContent = 'Success!';
-            status.style.color = 'green';
-        } else {
-            status.textContent = `Error: ${data.error || 'No audio URL received'}`;
-            status.style.color = 'red';
-        }
-    } catch (error) {
-        console.error(error);
-        status.textContent = 'An error occurred';
-        status.style.color = 'red';
-    }
-
-    button.disabled = false;
-    button.textContent = 'Generate Audio';
+    const result = await response.json();
+    audioPlayer.src = result.audio_url;
+    audioPlayer.style.display = "block";
+    statusText.textContent = "Audio generated successfully!";
+  } catch (error) {
+    console.error("TTS Error:", error);
+    statusText.textContent = "Failed to generate audio.";
+  }
 });
 
-// Echo Bot Recording
+// ========== Echo Bot (Recording + Upload) ==========
 let mediaRecorder;
 let audioChunks = [];
+let isRecording = false;
 
-const startBtn = document.getElementById('start-recording');
-const stopBtn = document.getElementById('stop-recording');
-const echoPlayer = document.getElementById('echo-player');
+const startBtn = document.getElementById("startBtn");
+const stopBtn = document.getElementById("stopBtn");
+const status = document.getElementById("status");
+const echoPlayer = document.getElementById("echo-player");
 
-startBtn.addEventListener('click', async () => {
+startBtn.addEventListener("click", async () => {
+  if (isRecording) return;
+
+  try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaRecorder = new MediaRecorder(stream);
 
     audioChunks = [];
 
     mediaRecorder.ondataavailable = event => {
-        if (event.data.size > 0) {
-            audioChunks.push(event.data);
-        }
+      audioChunks.push(event.data);
     };
 
-    mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-        const audioURL = URL.createObjectURL(audioBlob);
-        echoPlayer.src = audioURL;
-        echoPlayer.style.display = 'block';
-        echoPlayer.play();
+    mediaRecorder.onstop = async () => {
+      const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+      const file = new File([audioBlob], "recording.webm", { type: "audio/webm" });
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      status.innerText = "Uploading...";
+
+      try {
+        const response = await fetch("/upload-audio/", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) throw new Error("Upload failed");
+
+        const result = await response.json();
+        status.innerText = `Uploaded: ${result.filename}, Size: ${result.size} bytes`;
+
+        echoPlayer.src = `/uploads/${result.filename}`;
+        echoPlayer.style.display = "block";
+      } catch (error) {
+        console.error("Upload Error:", error);
+        status.innerText = "Upload failed.";
+      }
     };
 
     mediaRecorder.start();
+    isRecording = true;
     startBtn.disabled = true;
     stopBtn.disabled = false;
+    status.innerText = "Recording...";
+  } catch (err) {
+    console.error("Recording Error:", err);
+    status.innerText = "Mic permission denied or unavailable.";
+  }
 });
 
-stopBtn.addEventListener('click', () => {
-    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-        mediaRecorder.stop();
-        startBtn.disabled = false;
-        stopBtn.disabled = true;
-    }
+stopBtn.addEventListener("click", () => {
+  if (!isRecording) return;
+  mediaRecorder.stop();
+  isRecording = false;
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+  status.innerText = "Stopped recording. Processing...";
 });
