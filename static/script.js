@@ -32,7 +32,7 @@ document.getElementById("submit-button").addEventListener("click", async () => {
   }
 });
 
-// ========== Echo Bot (Recording + Upload) ==========
+// ========== Echo Bot (Recording + Upload + Transcription) ==========
 let mediaRecorder;
 let audioChunks = [];
 let isRecording = false;
@@ -41,6 +41,7 @@ const startBtn = document.getElementById("startBtn");
 const stopBtn = document.getElementById("stopBtn");
 const status = document.getElementById("status");
 const echoPlayer = document.getElementById("echo-player");
+const transcriptionText = document.getElementById("transcription-text"); // Display area
 
 startBtn.addEventListener("click", async () => {
   if (isRecording) return;
@@ -62,24 +63,26 @@ startBtn.addEventListener("click", async () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      status.innerText = "Uploading...";
+      status.innerText = "Uploading and transcribing...";
 
       try {
-        const response = await fetch("/upload-audio/", {
+        const response = await fetch("/transcribe/file", {
           method: "POST",
           body: formData,
         });
 
-        if (!response.ok) throw new Error("Upload failed");
+        if (!response.ok) throw new Error("Transcription failed");
 
         const result = await response.json();
-        status.innerText = `Uploaded: ${result.filename}, Size: ${result.size} bytes`;
 
-        echoPlayer.src = `/uploads/${result.filename}`;
+        status.innerText = `Transcription successful!`;
+        echoPlayer.src = URL.createObjectURL(audioBlob);
         echoPlayer.style.display = "block";
+        transcriptionText.innerText = `📝 Transcription: ${result.transcript}`; // ✅ Fixed this line
       } catch (error) {
-        console.error("Upload Error:", error);
-        status.innerText = "Upload failed.";
+        console.error("Transcription Error:", error);
+        status.innerText = "Transcription failed.";
+        transcriptionText.innerText = "";
       }
     };
 

@@ -40,17 +40,17 @@ Make sure to create a `.env` file locally with your Murf API credentials.
 
 ---
 
-## 🔊 About
+#### 🔊 About
 
 An interactive web app that converts text into lifelike speech using the **Murf AI Text-to-Speech API**.  
 Built with **FastAPI** and **Vanilla JS**, this project serves a simple frontend, accepts user input, and returns a playable audio link — perfect for experimenting with voice tech and real-time audio generation.
 
 ---
-# 🎙️ FastAPI Voice Agent - Day 5
+#### 🎙️ FastAPI Voice Agent - Day 5
 
 This is part of my #30DaysOfAIVoiceAgents challenge.
 
-## ✅ Features
+### ✅ Features
 - Convert text to speech using Murf AI
 - Record voice from the browser
 - Upload audio to backend
@@ -64,10 +64,21 @@ This is part of my #30DaysOfAIVoiceAgents challenge.
 - HTML/CSS
 - Web Audio API
 
-## 🚀 How to Run Locally
 
-### 1. Clone this repo
-```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+
+#### 🗓️ Day 6 – Echo Bot with Real-Time Transcription
+
+🎙️ Built an Echo Bot that allows users to **record their voice in the browser** and get **real-time transcriptions** using the [AssemblyAI API](https://www.assemblyai.com/).  
+The recorded audio is sent as a **binary blob** to the FastAPI backend and transcribed **without saving to disk**.
+
+##### 🔧 Features
+- Record voice directly in the browser  
+- Upload audio to FastAPI endpoint  
+- Transcribe speech to text using AssemblyAI  
+- Display audio playback and transcription in the UI
+
+##### 🛠 Tech Stack
+- FastAPI  
+- AssemblyAI  
+- HTML + CSS + JavaScript
 
