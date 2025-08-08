@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>AI Voice Agent</title>
   <style>
-    /* Global Styling */
+    /* Global Styling (same as your original) */
     body {
       background: #f6bdd0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -21,10 +21,10 @@
       margin-bottom: 10px;
     }
 
-    h3 {
-      font-size: 24px;
+    h2 {
+      font-size: 26px;
       color: #ad1457;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
     p {
@@ -32,7 +32,6 @@
       color: #555;
     }
 
-    /* Card-style sections */
     .section {
       background: linear-gradient(to bottom right, #ffe6f0, #ffffff);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
@@ -44,7 +43,6 @@
       text-align: center;
     }
 
-    /* Inputs & Buttons */
     input[type="text"] {
       padding: 14px 20px;
       font-size: 16px;
@@ -79,7 +77,6 @@
       transform: translateY(-2px);
     }
 
-    /* Audio styling */
     audio {
       margin-top: 20px;
       width: 100%;
@@ -88,16 +85,14 @@
       border-radius: 8px;
     }
 
-    /* Status text */
     #status-text,
-    #status {
+    #transcription-text {
       font-style: italic;
       color: #777;
       font-size: 15px;
       margin: 10px 0;
     }
 
-    /* Responsive tweaks */
     @media (max-width: 600px) {
       input[type="text"] {
         width: 90%;
@@ -118,20 +113,18 @@
     <input type="text" id="text-input" placeholder="Type something like 'Hello world'" />
     <br />
     <button id="submit-button">Generate Audio</button>
-    <audio id="audio-player" controls></audio>
+    <audio id="audio-player" controls style="display:none;"></audio>
   </div>
 
-  <!-- 🎧 Echo Bot -->
-<div class="section">
-  <h1>🎧 Echo Bot</h1>
-  <p id="status">Press Start to record your voice</p>
-  <button id="startBtn">Start Recording</button>
-  <button id="stopBtn" disabled>Stop Recording</button>
-  <audio id="echo-player" controls style="display: none;"></audio>
-  <p id="transcription-text" style="margin-top: 10px; font-weight: bold;"></p>
-</div>
+  <!-- 🎧 Echo Bot v2 -->
+  <div class="section">
+    <h2>🎧 Echo Bot v2 (Murf Voice)</h2>
+    <button id="record-btn">Record</button>
+    <button id="stop-btn" disabled>Stop</button>
+    <audio id="echo-audio" controls style="display:none;"></audio>
+    <p id="transcription-text"></p>
+  </div>
 
-<!-- JS -->
-<script src="/static/script.js"></script>
+  <script src="/static/script.js"></script>
 </body>
 </html>

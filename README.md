@@ -1,84 +1,80 @@
-# 30 Days of Voice Agents - FastAPI + Murf TTS
+# 30 Days of AI Voice Agents
 
-This is my ongoing project for the **30 Days of Voice Agents** challenge.
-
----
-
-### ✅ Day 1: Project Setup
-- Initialized FastAPI backend  
-- Created `index.html` and `script.js`  
-- Frontend served from the FastAPI server  
+This repository documents my 30-day challenge of building AI-powered voice agents using **FastAPI**, **Murf TTS**, and **AssemblyAI**.  
+Each day, I focus on implementing a new feature or improvement, sharing my progress along the way.
 
 ---
 
-### ✅ Day 2: Murf TTS REST Integration
-- Created `/generate-voice` endpoint to call Murf's `/generate` API  
-- Returns audio URL for provided text  
-- Tested via `/docs` and Postman  
-- Frontend updated to play audio from the generated URL  
-
-🔐 **.env Variables (not included in repo)**  
-Make sure to create a `.env` file locally with your Murf API credentials.
+## 🛠 Tech Stack
+- **Backend**: FastAPI (Python)
+- **Frontend**: HTML, CSS, JavaScript
+- **TTS (Text-to-Speech)**: Murf.ai API / Murf Python SDK
+- **Speech-to-Text (Transcription)**: AssemblyAI API
+- **Version Control**: Git & GitHub
 
 ---
 
-### ✅ Day 3: Audio Playback Integration
-- Connected frontend form to `/generate-voice` POST endpoint using JavaScript  
-- Captured user input text and sent it to the backend using `fetch()`  
-- Received audio URL from backend and played it using an HTML `<audio>` element  
-- Verified end-to-end flow: typed text → sent to API → received audio → played in browser  
-- Designed and tested a clean, responsive UI for input and playback  
+## 📅 Progress Log
+
+### **Day 1** — FastAPI Setup & Serving HTML
+- Set up a basic FastAPI project.
+- Served an HTML template with basic UI.
+- Folder structure created:
+
 
 ---
 
-### ✅ Day 4: Echo Bot with Audio Playback
-- Added a new section in the UI for recording audio
-- Used the MediaRecorder API to capture user's voice input
-- Playback of the recorded audio on the browser using `<audio>` element
-- Organized code into `index.html`, `script.js`, and FastAPI backend
-- Maintained design consistency with the previous days
+### **Day 2** — TTS REST API Call with Murf
+- Integrated Murf.ai API using the Murf Python SDK.
+- Created `/generate-audio/` POST endpoint.
+- Generated audio from user text input and returned an audio URL.
 
 ---
 
-#### 🔊 About
-
-An interactive web app that converts text into lifelike speech using the **Murf AI Text-to-Speech API**.  
-Built with **FastAPI** and **Vanilla JS**, this project serves a simple frontend, accepts user input, and returns a playable audio link — perfect for experimenting with voice tech and real-time audio generation.
+### **Day 3** — Real-time TTS Playback
+- Sent text from the frontend to the backend.
+- Played the generated audio instantly in the browser.
+- Improved UI design with clean and modern styling.
 
 ---
-#### 🎙️ FastAPI Voice Agent - Day 5
 
-This is part of my #30DaysOfAIVoiceAgents challenge.
+### **Day 4** — Echo Bot Recording & Playback
+- Added a voice recorder in the UI.
+- Created `/upload-audio/` endpoint to receive recorded audio.
+- Saved uploaded audio in `/uploads` folder.
+- Played back the same audio as an echo.
 
-### ✅ Features
-- Convert text to speech using Murf AI
-- Record voice from the browser
-- Upload audio to backend
-- Play uploaded audio instantly
-- Beautiful frontend (HTML/CSS/JS)
+---
 
-## 📦 Tech Stack
-- FastAPI
-- Murf API (TTS)
-- JavaScript
-- HTML/CSS
-- Web Audio API
+### **Day 5** — Audio Upload Metadata
+- Enhanced `/upload-audio/` to return:
+- File name
+- Content type
+- File size (KB)
+- Displayed metadata in the UI after upload.
 
+---
 
+### **Day 6** — Audio Transcription from Binary
+- Created `/transcribe/file` endpoint.
+- Accepted recorded audio directly as binary without saving to disk.
+- Used **AssemblyAI API** to transcribe audio.
+- Returned the transcription to the frontend.
 
-#### 🗓️ Day 6 – Echo Bot with Real-Time Transcription
+---
 
-🎙️ Built an Echo Bot that allows users to **record their voice in the browser** and get **real-time transcriptions** using the [AssemblyAI API](https://www.assemblyai.com/).  
-The recorded audio is sent as a **binary blob** to the FastAPI backend and transcribed **without saving to disk**.
+### **Day 7** — Transcription Display in UI
+- Improved UI to **display transcription neatly below the Echo Bot** section.
+- Added transcription card with clear heading and style.
+- Automatically shows:
+- "Transcribing..." while processing.
+- Final transcription result when ready.
 
-##### 🔧 Features
-- Record voice directly in the browser  
-- Upload audio to FastAPI endpoint  
-- Transcribe speech to text using AssemblyAI  
-- Display audio playback and transcription in the UI
+---
 
-##### 🛠 Tech Stack
-- FastAPI  
-- AssemblyAI  
-- HTML + CSS + JavaScript
+## 🚀 Running the Project Locally
 
+### ** Clone the repository**
+```bash
+git clone https://github.com/yourusername/30-days-ai-voice-agents.git
+cd 30-days-ai-voice-agents
