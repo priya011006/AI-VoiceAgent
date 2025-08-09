@@ -54,7 +54,6 @@ Each day, I focus on implementing a new feature or improvement, sharing my progr
 - Displayed metadata in the UI after upload.
 
 ---
-
 ### **Day 6** — Audio Transcription from Binary
 - Created `/transcribe/file` endpoint.
 - Accepted recorded audio directly as binary without saving to disk.
@@ -63,18 +62,70 @@ Each day, I focus on implementing a new feature or improvement, sharing my progr
 
 ---
 
-### **Day 7** — Transcription Display in UI
+### **Day 7** — Transcription Display in UI & TTS Echo Bot
 - Improved UI to **display transcription neatly below the Echo Bot** section.
 - Added transcription card with clear heading and style.
 - Automatically shows:
-- "Transcribing..." while processing.
-- Final transcription result when ready.
+  - "Transcribing..." while processing.
+  - Final transcription result when ready.
+- Implemented Echo Bot: uploaded audio is transcribed and then spoken back using Murf TTS.
+
+---
+
+### **Day 8** — Large Language Model (LLM) Integration
+- Added a new `/llm/query` POST endpoint to the backend.
+- Integrated with **Google Gemini API** for LLM-powered text generation.
+- The endpoint accepts text prompts and returns LLM responses.
+- No UI changes needed; backend is ready for advanced conversational AI.
 
 ---
 
 ## 🚀 Running the Project Locally
 
-### ** Clone the repository**
+### **Clone the repository**
 ```bash
 git clone https://github.com/yourusername/30-days-ai-voice-agents.git
 cd 30-days-ai-voice-agents
+```
+
+### **Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+### **Set up environment variables**
+Create a `.env` file in the project root with the following:
+```env
+ASSEMBLYAI_API_KEY=your-assemblyai-api-key
+MURF_API_KEY=your-murf-api-key
+GEMINI_API_KEY=your-gemini-api-key
+```
+*(Do not share your API keys publicly.)*
+
+### **Run the FastAPI server**
+```bash
+uvicorn main:app --reload
+```
+
+### **Open the app**
+- Visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser for the UI.
+- Visit [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) for API documentation and testing.
+
+---
+
+## 🛠️ Endpoints Overview
+
+- `POST /transcribe/file` — AssemblyAI-powered audio transcription.
+- `POST /generate-audio` — Murf TTS: generate audio from text.
+- `POST /tts/echo` — Echo bot: transcribe then speak back.
+- `POST /llm/query` — Query Gemini LLM with a prompt.
+
+---
+
+## 💡 Tech Used
+
+- FastAPI & Python
+- AssemblyAI (Speech-to-Text)
+- Murf (Text-to-Speech)
+- Google Gemini (LLM)
+- JavaScript, HTML, CSS (Frontend)
